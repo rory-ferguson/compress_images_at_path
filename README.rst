@@ -7,6 +7,7 @@ Requires
 ------------
 Supports Python 3.6.7
 
+API account (free) with ImageOptim https://imageoptim.com/api/registers
 
 Installation
 ------------
