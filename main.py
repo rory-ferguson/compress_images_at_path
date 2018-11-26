@@ -11,7 +11,7 @@ class ImageOptimCompression(object):
     input_path = input('What is the Directory Path?')
 
     def __init__(self):
-        self.username = 'vnkhpkrhkl'
+        self.username = ''
         self.quality = 'full'
         self.endpoint = 'https://im2.io'
 
