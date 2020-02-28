@@ -1,6 +1,8 @@
 import os
 import requests
 import logging
+from pathlib import Path
+
 from tqdm import tqdm
 
 logging.captureWarnings(True)
@@ -11,7 +13,7 @@ class ImageOptimCompression(object):
     input_path = input('What is the Directory Path?')
 
     def __init__(self):
-        self.username = ''
+        self.username = 'svkzzxkccz'
         self.quality = 'full'
         self.endpoint = 'https://im2.io'
 
@@ -28,12 +30,11 @@ class ImageOptimCompression(object):
         return url
 
     def create_dirs(self):
-        os.chdir(self.input_path)
-        os.rename('images\\', 'non_compressed')
+        os.rename(f'{Path(self.input_path).joinpath("images")}', f'{Path(self.input_path).joinpath("non_compressed")}')
 
-        os.makedirs('images', exist_ok=True)
-        self.output_dir = self.input_path + '\\images\\'
-        self.raw_image_dir = self.input_path + '\\non_compressed\\'
+        os.makedirs(Path(self.input_path).joinpath('images'), exist_ok=True)
+        self.output_dir = Path(self.input_path).joinpath('images')
+        self.raw_image_dir = Path(self.input_path).joinpath('non_compressed')
         return
 
     def request(self, url):
@@ -45,8 +46,9 @@ class ImageOptimCompression(object):
             extension = item.split('.', 1)[1]
             files = {'upload_file': open(item, 'rb')}
             r = requests.post(str(url), files=files, stream=True)
+            image = str(name) + '.' + extension
 
-            with open(self.output_dir + str(name) + '.' + extension, 'wb') as fd:
+            with open(Path(self.output_dir).joinpath(image), 'wb') as fd:
                 for chunk in r.iter_content(chunk_size=1048):
                     fd.write(chunk)
 
